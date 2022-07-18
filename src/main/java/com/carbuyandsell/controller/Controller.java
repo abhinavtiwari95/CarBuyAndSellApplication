@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -32,9 +33,9 @@ public class Controller {
 		return carservice.getlistofcar();
 	}
 	
-	@PostMapping("/buy")
+	@PostMapping("/saveuser")
 	public UserDetails savedetailes(@RequestBody UserDetails userdetails) {
-		return userservice.SaveUserDetails(userdetails);
+		return userservice.saveOnlyUser(userdetails);
 	}
 	
 	@PostMapping("/sellcardetails")
@@ -42,9 +43,9 @@ public class Controller {
 		carservice.Sellcar(carinfo);
 	}
 	
-	@PostMapping("/buy/{userid}/{carno}")
-	public UserDetails buyCar(@PathVariable("userid") int userid,@PathVariable("carno") int carno,@RequestBody UserDetails userdetails) {
-		return carservice.buyer(userid, carno,userdetails);
+	@PostMapping("/buy/{carno}")
+	public UserDetails buyCar(@RequestHeader("UserId") int userid,@PathVariable("carno") int carno) {
+		return userservice.SaveUserDetails(userid, carno);
 		
 	}
 	@PutMapping("/update/{car_number}")
