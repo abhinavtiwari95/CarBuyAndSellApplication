@@ -3,8 +3,10 @@ package com.carbuyandsell.repository;
 import com.carbuyandsell.customerdetails.UserDetails;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface IUser extends JpaRepository<UserDetails, Integer> {
+@Repository
+public interface UserInfoRepo extends JpaRepository<UserDetails, Integer> {
 	
 	
 

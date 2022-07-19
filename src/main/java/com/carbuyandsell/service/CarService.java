@@ -2,14 +2,13 @@ package com.carbuyandsell.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.carbuyandsell.buyerDTO.BuyerDTO;
 import com.carbuyandsell.carentity.CarInfo;
 import com.carbuyandsell.customerdetails.UserDetails;
-import com.carbuyandsell.repository.CarRepository;
-import com.carbuyandsell.repository.IUser;
+import com.carbuyandsell.repository.CarInfoRepo;
+import com.carbuyandsell.repository.UserInfoRepo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,10 +17,10 @@ import org.springframework.stereotype.Service;
 public class CarService {
 
 	@Autowired
-	public CarRepository carrepo;
+	public CarInfoRepo carrepo;
 	
 	@Autowired
-	public IUser userrepo;
+	public UserInfoRepo userrepo;
 	
 
 	public List<BuyerDTO> getlistofcar() {
@@ -33,7 +32,7 @@ public class CarService {
 
 		BuyerDTO buyerdto = new BuyerDTO();
 
-		buyerdto.setCar_no(carinfo.getCar_number());
+		buyerdto.setCar_number(carinfo.getCar_number());
 		buyerdto.setCar_model(carinfo.getCar_model());
 		buyerdto.setCar_company(carinfo.getCar_company());
 		buyerdto.setCar_price(carinfo.getCar_price());
@@ -69,7 +68,7 @@ public class CarService {
 		}
 		userdetail=userrepo.findById(UserId).orElseThrow(null);
 		
-		if(userdetail.isCust_type()==false) {
+		if(userdetail.isUser_type()==false) {
 			carInfo.setIs_Purchased(true);
 		}
 		return userrepo.save(userdetail);
