@@ -25,22 +25,24 @@ public class UserController {
 
 	
 	@PostMapping("/saveuser")
-	public ResponseEntity<BuyerDTO> savedetailes(@RequestBody BuyerDTO buyerdto) {
+	public UserDetails savedetailes(@RequestBody UserDetails userdetails) {
 		
-		//Converting the DTO to entity
-		UserDetails userRequest = modelMapper.map(buyerdto, UserDetails.class);
-		
-		UserDetails userdetails = userservice.saveOnlyUser(userRequest);
-		
-		//Converting the entity to DTO
-		BuyerDTO buyerdtoResponce = modelMapper.map(userdetails, BuyerDTO.class);
-		
-		return new ResponseEntity<BuyerDTO>(buyerdtoResponce, HttpStatus.CREATED);
+		return userservice.saveOnlyUser(userdetails);
+//		
+//		//Converting the DTO to entity
+//		UserDetails userRequest = modelMapper.map(userdetails, UserDetails.class);
+//		
+//		UserDetails userdetails1 = userservice.saveOnlyUser(userRequest);
+//		
+//		//Converting the entity to DTO
+//		BuyerDTO buyerdtoResponce = modelMapper.map(userdetails1, BuyerDTO.class);
+//		
+//		return new ResponseEntity<BuyerDTO>(buyerdtoResponce, HttpStatus.CREATED);
 	}
 
 	@PostMapping("/buy/{carno}")
-	public UserDetails buyCar(@RequestHeader("User_Contact_No") int userid, @PathVariable("carno") int carno) {
-		return userservice.SaveUserDetails(userid, carno);
+	public UserDetails buyCar(@RequestHeader("User_Contact_No") int user_contact_no, @PathVariable("carno") int carno) {
+		return userservice.SaveUserDetails(user_contact_no, carno);
 
 	}
 

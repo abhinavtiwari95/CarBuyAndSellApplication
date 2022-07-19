@@ -90,7 +90,8 @@ public class CarService {
 		update.setCreated_at(update.getCreated_at());
 		update.setUpdated_at(LocalDateTime.now());
 		}
-		}catch(Exception e) {
+		}
+		catch(Exception e) {
 			System.out.println("No Data Present with this carno");
 		}
 		return carrepo.save(update);
