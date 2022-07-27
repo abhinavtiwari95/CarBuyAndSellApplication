@@ -1,4 +1,4 @@
-package com.carbuyandsell.customerdetails;
+package com.carbuyandsell.userdetails;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,17 +10,16 @@ import javax.persistence.OneToMany;
 
 import com.carbuyandsell.carentity.CarInfo;
 
-
 @Entity
 public class UserDetails {
+
 	@Id
-	
 	private int user_contact_no;
 	private String user_name;
 	private String user_address;
-	private boolean user_type=Boolean.FALSE;
-	
-	@OneToMany(cascade=CascadeType.ALL)
+	private boolean user_type = Boolean.FALSE;
+
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<CarInfo> carinfo = new ArrayList<CarInfo>();
 
 	public int getUser_contact_no() {
@@ -62,7 +61,5 @@ public class UserDetails {
 	public void setCarinfo(List<CarInfo> carinfo) {
 		this.carinfo = carinfo;
 	}
-	
-	
 
 }

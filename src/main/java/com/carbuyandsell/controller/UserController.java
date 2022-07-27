@@ -1,8 +1,8 @@
 package com.carbuyandsell.controller;
 
 import com.carbuyandsell.buyerDTO.BuyerDTO;
-import com.carbuyandsell.customerdetails.UserDetails;
 import com.carbuyandsell.service.UserService;
+import com.carbuyandsell.userdetails.UserDetails;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,27 +16,26 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class UserController {
-	
+
 	@Autowired
 	public UserService userservice;
-	
+
 	@Autowired
 	public ModelMapper modelMapper;
 
-	
 	@PostMapping("/saveuser")
 	public ResponseEntity<BuyerDTO> savedetailes(@RequestBody UserDetails user) {
-		
+
 //		return userservice.saveOnlyUser(userdetails);
-		
-		//Converting the DTO to entity
+
+		// Converting the DTO to entity
 		UserDetails userRequest = modelMapper.map(user, UserDetails.class);
-		
+
 		UserDetails userdetails = userservice.saveOnlyUser(userRequest);
-		
-		//Converting the entity to DTO
+
+		// Converting the entity to DTO
 		UserDetails buyerdtoResponce = modelMapper.map(userdetails, UserDetails.class);
-		
+
 		return new ResponseEntity<BuyerDTO>(HttpStatus.CREATED);
 	}
 
@@ -45,6 +44,5 @@ public class UserController {
 		return userservice.SaveUserDetails(user_contact_no, carno);
 
 	}
-
 
 }

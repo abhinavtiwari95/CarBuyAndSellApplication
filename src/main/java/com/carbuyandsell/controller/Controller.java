@@ -5,9 +5,9 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 import com.carbuyandsell.buyerDTO.BuyerDTO;
 import com.carbuyandsell.carentity.CarInfo;
-import com.carbuyandsell.customerdetails.UserDetails;
 import com.carbuyandsell.service.CarService;
 import com.carbuyandsell.service.UserService;
+import com.carbuyandsell.userdetails.UserDetails;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,7 +28,6 @@ public class Controller {
 	@Autowired
 	public CarService carservice;
 
-	
 	@GetMapping("/fetchcar")
 	public List<BuyerDTO> getlistofcar() {
 
@@ -42,18 +41,17 @@ public class Controller {
 		CarInfo carRequest = modelMapper.map(buyerDto, CarInfo.class);
 
 		CarInfo carinfo = carservice.Sellcar(carRequest);
-		
+
 		// Then convert entity to BuerDTO
 		BuyerDTO buyerResponse = modelMapper.map(carinfo, BuyerDTO.class);
 
 		return new ResponseEntity<BuyerDTO>(buyerResponse, HttpStatus.CREATED);
 	}
 
-	
 	@PutMapping("/update/{car_number}")
 	public ResponseEntity<BuyerDTO> updateDetails(@PathVariable("car_number") int car_number,
 			@RequestBody BuyerDTO buyerDto) {
-		
+
 		// First convert BuerDTO to Entity by using ModelMapperClass
 		CarInfo postRequest = modelMapper.map(buyerDto, CarInfo.class);
 
@@ -64,4 +62,5 @@ public class Controller {
 
 		return ResponseEntity.ok().body(buyerResponse);
 	}
+
 }

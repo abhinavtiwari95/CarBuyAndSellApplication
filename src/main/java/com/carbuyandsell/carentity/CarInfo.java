@@ -1,6 +1,7 @@
 package com.carbuyandsell.carentity;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,6 +20,8 @@ public class CarInfo {
 	private int car_price;
 	private int contact_no;
 	private int year;
+	private int discount_price;
+	
 	private boolean is_Purchased=Boolean.FALSE;
 	private LocalDateTime created_at;
 	private LocalDateTime updated_at;
@@ -110,5 +113,13 @@ public class CarInfo {
 	public void setUpdated_at(LocalDateTime updated_at) {
 		this.updated_at = updated_at;
 	}
+	public int getDiscount_price() {
+		return discount_price;
+	}
+
+	public void setDiscount_price(int discount_price) {
+		this.discount_price = discount_price;
+	}
+
 
 }
