@@ -35,6 +35,11 @@ public class UserService {
 		carinfo.setCar_owner(carinfoget.getCar_owner());
 		carinfo.setCar_price(carinfoget.getCar_price());
 		carinfo.setContact_no(carinfoget.getContact_no());
+		carinfo.setManufacture_year(carinfoget.getManufacture_year());
+		carinfo.setYear(carinfoget.getYear());
+		carinfo.setCreated_at(carinfoget.getCreated_at());
+		carinfo.setBuy_at(carinfoget.getBuy_at().now());
+		
 		carinfo.setIs_Purchased(true);
 
 		carinfo.setDiscount_price(carinfoget.getCar_price() - (carinfoget.getCar_price() * Discount.DIS) / 100);
@@ -47,8 +52,12 @@ public class UserService {
 	}
 
 	public UserDetails saveOnlyUser(UserDetails user) {
-
-		return userrepo.save(user);
+		UserDetails userdetails = new UserDetails();
+		userdetails.setUser_contact_no(user.getUser_contact_no());
+		userdetails.setUser_name(user.getUser_name());
+		userdetails.setUser_address(user.getUser_address());
+		userdetails.setCreated_at(user.getCreated_at().now());
+		return userrepo.save(userdetails);
 
 	}
 }

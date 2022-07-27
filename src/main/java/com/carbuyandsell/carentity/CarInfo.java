@@ -25,6 +25,7 @@ public class CarInfo {
 	private boolean is_Purchased=Boolean.FALSE;
 	private LocalDateTime created_at;
 	private LocalDateTime updated_at;
+	private LocalDateTime buy_at;
 
 	public int getContact_no() {
 		return contact_no;
@@ -113,6 +114,14 @@ public class CarInfo {
 	public void setUpdated_at(LocalDateTime updated_at) {
 		this.updated_at = updated_at;
 	}
+	public LocalDateTime getBuy_at() {
+		return buy_at;
+	}
+
+	public void setBuy_at(LocalDateTime buy_at) {
+		this.buy_at = buy_at;
+	}
+
 	public int getDiscount_price() {
 		return discount_price;
 	}
