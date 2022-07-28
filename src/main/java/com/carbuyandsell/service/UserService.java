@@ -19,12 +19,19 @@ public class UserService {
 	public UserInfoRepo userrepo;
 
 	@Autowired
+	public Discount dis;
+	
+	@Autowired
 	public CarInfoRepo carrepo;
 
 	public UserDetails SaveUserDetails(int custNo, int carNo) {
 
 		UserDetails userdetails = userrepo.findById(custNo).orElse(null);
 		userdetails.setUser_type(true);
+		
+		if(userdetails.isUser_type()==true) {
+			userdetails.setCount_purchased(userdetails.getCount_purchased()+1);
+		}
 
 		CarInfo carinfoget = carrepo.findById(carNo).orElse(null);
 
@@ -37,7 +44,14 @@ public class UserService {
 		carinfo.setContact_no(carinfoget.getContact_no());
 		carinfo.setIs_Purchased(true);
 
-		carinfo.setDiscount_price(carinfoget.getCar_price() - (carinfoget.getCar_price() * Discount.DIS) / 100);
+		switch (userdetails.getCount_purchased()) {
+			case 1:
+				carinfo.setDiscount_price(carinfoget.getCar_price() - (carinfoget.getCar_price() * dis.getFirst_time_dis()) / 100);
+				break;
+			default:
+				break;
+		}
+		
 
 		List<CarInfo> carinfo1 = new ArrayList<>();
 		carinfo1.add(carinfo);

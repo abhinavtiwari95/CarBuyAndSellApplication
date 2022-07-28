@@ -26,8 +26,6 @@ public class UserController {
 	@PostMapping("/saveuser")
 	public ResponseEntity<BuyerDTO> savedetailes(@RequestBody UserDetails user) {
 
-//		return userservice.saveOnlyUser(userdetails);
-
 		// Converting the DTO to entity
 		UserDetails userRequest = modelMapper.map(user, UserDetails.class);
 

@@ -17,6 +17,7 @@ public class UserDetails {
 	private int user_contact_no;
 	private String user_name;
 	private String user_address;
+	private int count_purchased;
 	private boolean user_type = Boolean.FALSE;
 
 	@OneToMany(cascade = CascadeType.ALL)
@@ -60,6 +61,14 @@ public class UserDetails {
 
 	public void setCarinfo(List<CarInfo> carinfo) {
 		this.carinfo = carinfo;
+	}
+
+	public int getCount_purchased() {
+		return count_purchased;
+	}
+
+	public void setCount_purchased(int count_purchased) {
+		this.count_purchased = count_purchased;
 	}
 
 }
