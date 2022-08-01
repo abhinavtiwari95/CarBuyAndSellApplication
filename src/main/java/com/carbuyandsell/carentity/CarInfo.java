@@ -22,9 +22,10 @@ public class CarInfo {
 	private int year;
 	private int discount_price;
 	
-	private boolean is_Purchased=Boolean.FALSE;
+	private boolean isPurchased=Boolean.FALSE;
 	private LocalDateTime created_at;
 	private LocalDateTime updated_at;
+	private LocalDateTime buy_at;
 
 	public int getContact_no() {
 		return contact_no;
@@ -42,12 +43,14 @@ public class CarInfo {
 		this.year = year;
 	}
 
-	public boolean isIs_Purchased() {
-		return is_Purchased;
+
+
+	public boolean isPurchased() {
+		return isPurchased;
 	}
 
-	public void setIs_Purchased(boolean is_Purchased) {
-		this.is_Purchased = is_Purchased;
+	public void setPurchased(boolean isPurchased) {
+		this.isPurchased = isPurchased;
 	}
 
 	public int getCar_number() {
@@ -119,6 +122,14 @@ public class CarInfo {
 
 	public void setDiscount_price(int discount_price) {
 		this.discount_price = discount_price;
+	}
+
+	public LocalDateTime getBuy_at() {
+		return buy_at;
+	}
+
+	public void setBuy_at(LocalDateTime buy_at) {
+		this.buy_at = buy_at;
 	}
 
 

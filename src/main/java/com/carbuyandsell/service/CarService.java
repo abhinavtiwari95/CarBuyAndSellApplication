@@ -6,17 +6,20 @@ import java.util.stream.Collectors;
 
 import com.carbuyandsell.buyerDTO.BuyerDTO;
 import com.carbuyandsell.carentity.CarInfo;
-import com.carbuyandsell.discount.Discount;
 import com.carbuyandsell.repository.CarInfoRepo;
 import com.carbuyandsell.repository.UserInfoRepo;
 import com.carbuyandsell.userdetails.UserDetails;
 
+import org.aspectj.bridge.AbortException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CarService {
+	
+	@Autowired
+	public ModelMapper modelMapper;
 
 	@Autowired
 	public CarInfoRepo carrepo;
@@ -26,7 +29,7 @@ public class CarService {
 
 	public List<BuyerDTO> getlistofcar() {
 
-		return ((List<CarInfo>) carrepo.getAllCar()).stream().map(this::toDTO).collect(Collectors.toList());
+		return ((List<CarInfo>) carrepo.findByIsPurchasedTrue()).stream().map(this::toDTO).collect(Collectors.toList());
 	}
 
 	public BuyerDTO toDTO(CarInfo carinfo) {
@@ -47,57 +50,62 @@ public class CarService {
 	}
 
 	public CarInfo Sellcar(CarInfo c) {
-		CarInfo ci = new CarInfo();
-		ci.setCar_number(c.getCar_number());
-		ci.setCar_company(c.getCar_company());
-		ci.setCar_model(c.getCar_model());
-		ci.setManufacture_year(c.getManufacture_year());
-		ci.setCar_owner(c.getCar_owner());
-		ci.setCar_price(c.getCar_price());
-		ci.setYear(c.getYear());
-		ci.setContact_no(c.getContact_no());
-		ci.setCreated_at(c.getCreated_at().now());
-		return carrepo.save(ci);
+		BuyerDTO buyerDto = new BuyerDTO();
+		// First convert BuerDTO to Entity by using ModelMapperClass
+		CarInfo carRequest = modelMapper.map(buyerDto, CarInfo.class);
+		c.setCreated_at(c.getCreated_at().now());
+		CarInfo carinfo = carrepo.save(c);
+
+		// Then convert entity to BuerDTO
+		BuyerDTO buyerResponse = modelMapper.map(carinfo, BuyerDTO.class);
+
+		return carinfo;
 
 	}
 
-	public UserDetails buyer(int UserId, int carNo, UserDetails userdetail) {
-		CarInfo carInfo = carrepo.findById(carNo).orElse(null);
-		System.out.println(carInfo);
-		if (carInfo.isIs_Purchased() != true) {
-			carInfo.setIs_Purchased(false);
+	public UserDetails buyer(int user_contact_no, int carNo, UserDetails userdetail) {
+		CarInfo carInfo = carrepo.findById(carNo).orElseThrow(() -> new AbortException("Wrong car number is provided"));
+	
+		if (carInfo.isPurchased() != true) {
+			carInfo.setPurchased(false);
 		}
-		userdetail = userrepo.findById(UserId).orElseThrow(null);
+		userdetail = userrepo.findById(user_contact_no)
+				.orElseThrow(() -> new AbortException("Wrong User number is specified in HEADERS"));
 
 		if (userdetail.isUser_type() == false) {
-			carInfo.setIs_Purchased(true);
+			carInfo.setPurchased(true);
 		}
+		
 		return userrepo.save(userdetail);
 	}
 
 	public CarInfo update(int car_number, CarInfo car) {
+		BuyerDTO buyerDto = new BuyerDTO();
 
-		CarInfo update = carrepo.findById(car_number).get();
-		try {
-			if (update != null) {
-				update.setCar_company(car.getCar_company());
-				update.setCar_model(car.getCar_model());
-				update.setCar_number(car.getCar_number());
-				update.setCar_owner(car.getCar_owner());
-				update.setCar_price(car.getCar_price());
-				update.setContact_no(car.getContact_no());
-				update.setManufacture_year(car.getManufacture_year());
-				update.setYear(car.getYear());
-				update.setCreated_at(update.getCreated_at());
-				update.setUpdated_at(LocalDateTime.now());
-			}
-		} catch (Exception e) {
-			System.out.println("No Data Present with this carno");
-		}
-		return carrepo.save(update);
+		CarInfo update = carrepo.findById(car_number)
+				.orElseThrow(() -> new AbortException("Wrong car number is specified"));
+		
+		// First convert BuerDTO to Entity by using ModelMapperClass
+				CarInfo postRequest = modelMapper.map(buyerDto, CarInfo.class);
+				car.setUpdated_at(car.getUpdated_at().now());
+				CarInfo carinfo = carrepo.save(car);
+
+				// Then convert entity to BuerDTO
+				BuyerDTO buyerResponse = modelMapper.map(carinfo, BuyerDTO.class);
+
+
+//		update.setCar_company(car.getCar_company());
+//		update.setCar_model(car.getCar_model());
+//		update.setCar_number(car.getCar_number());
+//		update.setCar_owner(car.getCar_owner());
+//		update.setCar_price(car.getCar_price());
+//		update.setContact_no(car.getContact_no());
+//		update.setManufacture_year(car.getManufacture_year());
+//		update.setYear(car.getYear());
+//		update.setCreated_at(update.getCreated_at());
+//		
+
+		return carinfo;
 
 	}
-	
-	
-
 }

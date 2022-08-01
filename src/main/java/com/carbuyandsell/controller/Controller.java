@@ -23,9 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class Controller {
 
 	@Autowired
-	public ModelMapper modelMapper;
-
-	@Autowired
 	public CarService carservice;
 
 	@GetMapping("/fetchcar")
@@ -35,32 +32,16 @@ public class Controller {
 	}
 
 	@PostMapping("/sellcardetails")
-	public ResponseEntity<BuyerDTO> sellcardetails(@RequestBody BuyerDTO buyerDto) {
-
-		// First convert BuerDTO to Entity by using ModelMapperClass
-		CarInfo carRequest = modelMapper.map(buyerDto, CarInfo.class);
-
-		CarInfo carinfo = carservice.Sellcar(carRequest);
-
-		// Then convert entity to BuerDTO
-		BuyerDTO buyerResponse = modelMapper.map(carinfo, BuyerDTO.class);
-
-		return new ResponseEntity<BuyerDTO>(buyerResponse, HttpStatus.CREATED);
+	public ResponseEntity<BuyerDTO> sellcardetails(@RequestBody CarInfo car) {
+		carservice.Sellcar(car);
+		return new ResponseEntity<BuyerDTO>(HttpStatus.CREATED);
 	}
 
 	@PutMapping("/update/{car_number}")
 	public ResponseEntity<BuyerDTO> updateDetails(@PathVariable("car_number") int car_number,
-			@RequestBody BuyerDTO buyerDto) {
-
-		// First convert BuerDTO to Entity by using ModelMapperClass
-		CarInfo postRequest = modelMapper.map(buyerDto, CarInfo.class);
-
-		CarInfo carinfo = carservice.update(car_number, postRequest);
-
-		// Then convert entity to BuerDTO
-		BuyerDTO buyerResponse = modelMapper.map(carinfo, BuyerDTO.class);
-
-		return ResponseEntity.ok().body(buyerResponse);
+			@RequestBody CarInfo carinfo) {
+		carservice.update(car_number, carinfo);
+		return ResponseEntity.ok().body(null);
 	}
 
 }

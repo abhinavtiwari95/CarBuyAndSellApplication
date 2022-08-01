@@ -1,5 +1,6 @@
 package com.carbuyandsell.userdetails;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class UserDetails {
 	private String user_name;
 	private String user_address;
 	private int count_purchased;
+	private LocalDateTime created_at;
 	private boolean user_type = Boolean.FALSE;
 
 	@OneToMany(cascade = CascadeType.ALL)
@@ -69,6 +71,14 @@ public class UserDetails {
 
 	public void setCount_purchased(int count_purchased) {
 		this.count_purchased = count_purchased;
+	}
+
+	public LocalDateTime getCreated_at() {
+		return created_at;
+	}
+
+	public void setCreated_at(LocalDateTime created_at) {
+		this.created_at = created_at;
 	}
 
 }

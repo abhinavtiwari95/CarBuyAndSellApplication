@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(value = "com.carbuyandsell.discount.Discount")
 public class CarBuyAndSellApplication {
 
 	@Bean

@@ -1,6 +1,5 @@
 package com.carbuyandsell.repository;
 
-import com.carbuyandsell.carentity.CarInfo;
 import com.carbuyandsell.userdetails.UserDetails;
 
 import org.springframework.data.jpa.repository.JpaRepository;
