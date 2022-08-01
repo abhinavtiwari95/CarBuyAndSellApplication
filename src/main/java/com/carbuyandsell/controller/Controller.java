@@ -6,9 +6,6 @@ import org.modelmapper.ModelMapper;
 import com.carbuyandsell.buyerDTO.BuyerDTO;
 import com.carbuyandsell.carentity.CarInfo;
 import com.carbuyandsell.service.CarService;
-import com.carbuyandsell.service.UserService;
-import com.carbuyandsell.userdetails.UserDetails;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

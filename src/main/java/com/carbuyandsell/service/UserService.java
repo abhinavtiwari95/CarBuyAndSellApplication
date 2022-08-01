@@ -25,6 +25,9 @@ public class UserService {
 
 		UserDetails userdetails = userrepo.findById(custNo).orElse(null);
 		userdetails.setUser_type(true);
+		if(userdetails.isUser_type()==true) {
+			userdetails.setCount_purchased(userdetails.getCount_purchased()+1);
+		}
 
 		CarInfo carinfoget = carrepo.findById(carNo).orElse(null);
 
@@ -41,9 +44,13 @@ public class UserService {
 		carinfo.setBuy_at(carinfoget.getBuy_at().now());
 		
 		carinfo.setIs_Purchased(true);
-
-		carinfo.setDiscount_price(carinfoget.getCar_price() - (carinfoget.getCar_price() * Discount.DIS) / 100);
-
+		switch (userdetails.getCount_purchased()) {
+			case 1:
+				carinfo.setDiscount_price(carinfoget.getCar_price() - (carinfoget.getCar_price() *Discount.DIS) / 100);
+				break;
+			default:
+				break;
+		}
 		List<CarInfo> carinfo1 = new ArrayList<>();
 		carinfo1.add(carinfo);
 		userdetails.getCarinfo().addAll(carinfo1);
