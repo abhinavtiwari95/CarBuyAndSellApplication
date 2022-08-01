@@ -1,6 +1,7 @@
 package com.carbuyandsell.controller;
 
 import com.carbuyandsell.buyerDTO.BuyerDTO;
+import com.carbuyandsell.discount.Discount;
 import com.carbuyandsell.service.UserService;
 import com.carbuyandsell.userdetails.UserDetails;
 
@@ -8,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,17 +27,7 @@ public class UserController {
 
 	@PostMapping("/saveuser")
 	public ResponseEntity<BuyerDTO> savedetailes(@RequestBody UserDetails user) {
-
-//		return userservice.saveOnlyUser(userdetails);
-
-		// Converting the DTO to entity
-		UserDetails userRequest = modelMapper.map(user, UserDetails.class);
-
-		UserDetails userdetails = userservice.saveOnlyUser(userRequest);
-
-		// Converting the entity to DTO
-		UserDetails buyerdtoResponce = modelMapper.map(userdetails, UserDetails.class);
-
+		userservice.saveOnlyUser(user);
 		return new ResponseEntity<BuyerDTO>(HttpStatus.CREATED);
 	}
 

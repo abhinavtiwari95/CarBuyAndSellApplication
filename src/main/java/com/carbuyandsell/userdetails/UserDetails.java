@@ -65,13 +65,6 @@ public class UserDetails {
 		this.carinfo = carinfo;
 	}
 
-	public LocalDateTime getCreated_at() {
-		return created_at;
-	}
-
-	public void setCreated_at(LocalDateTime created_at) {
-		this.created_at = created_at;
-	}
 
 	public int getCount_purchased() {
 		return count_purchased;
@@ -81,5 +74,12 @@ public class UserDetails {
 		this.count_purchased = count_purchased;
 	}
 
-	
+	public LocalDateTime getCreated_at() {
+		return created_at;
+	}
+
+	public void setCreated_at(LocalDateTime created_at) {
+		this.created_at = created_at;
+	}
+
 }
