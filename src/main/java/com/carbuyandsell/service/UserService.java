@@ -33,6 +33,7 @@ public class UserService {
 	@Autowired
 	public UserService userservice;
 
+	// For Buying Car
 	public UserDetails BuyCarWithUserDetails(int user_id, int carNo) {
 		
 		
@@ -101,6 +102,7 @@ public class UserService {
 		return userrepo.save(userdetails);
 	}
 
+	// Saving User Details
 	public UserDetails saveOnlyUser(UserDetails user) {
 		
 		user.setCreated_at(user.getCreated_at().now());
