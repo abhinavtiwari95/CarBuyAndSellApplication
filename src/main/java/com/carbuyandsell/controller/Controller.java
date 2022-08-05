@@ -21,20 +21,22 @@ public class Controller {
 
 	@Autowired
 	public CarService carservice;
-
+/*
+ * fetching available cars
+ */
 	@GetMapping("/fetchcar")
 	public List<BuyerDTO> getlistofcar() {
 
 		return carservice.getlistofcar();
 	}
-
-	@PostMapping("/sellcardetails")
+// Add a car for sell
+	@PostMapping("/savecardetails")
 	public ResponseEntity<BuyerDTO> sellcardetails(@RequestBody CarInfo car) {
 		
 		return new ResponseEntity<BuyerDTO>(carservice.Sellcar(car),HttpStatus.CREATED);
 
 	}
-
+//update car details
 	@PutMapping("/update/{car_number}")
 	public ResponseEntity<BuyerDTO> updateDetails(@PathVariable("car_number") int car_number,
 			@RequestBody CarInfo carinfo) {
