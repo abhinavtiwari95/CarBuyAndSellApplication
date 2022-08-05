@@ -10,8 +10,8 @@ import javax.persistence.Id;
 
 @Entity
 public class CarInfo {
-	@Id
 	
+	@Id
 	private int car_number;
 	private int car_model;
 	private int manufacture_year;
@@ -19,7 +19,7 @@ public class CarInfo {
 	private String car_owner;
 	private int car_price;
 	private int contact_no;
-	private int year;
+	private int buy_year;
 	private int discount_price;
 	
 	private boolean isPurchased=Boolean.FALSE;
@@ -35,15 +35,13 @@ public class CarInfo {
 		this.contact_no = contact_no;
 	}
 
-	public int getYear() {
-		return year;
+	public int getBuy_year() {
+		return buy_year;
 	}
 
-	public void setYear(int year) {
-		this.year = year;
+	public void setBuy_year(int buy_year) {
+		this.buy_year = buy_year;
 	}
-
-
 
 	public boolean isPurchased() {
 		return isPurchased;
@@ -131,14 +129,5 @@ public class CarInfo {
 	public void setDiscount_price(int discount_price) {
 		this.discount_price = discount_price;
 	}
-
-	public LocalDateTime getBuy_at() {
-		return buy_at;
-	}
-
-	public void setBuy_at(LocalDateTime buy_at) {
-		this.buy_at = buy_at;
-	}
-
 
 }

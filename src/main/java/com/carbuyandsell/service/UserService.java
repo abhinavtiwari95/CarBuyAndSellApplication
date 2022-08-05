@@ -1,9 +1,9 @@
 package com.carbuyandsell.service;
 
+import com.carbuyandsell.buyerDTO.BuyerDTO;
 import com.carbuyandsell.carentity.CarInfo;
 import com.carbuyandsell.discount.Discount;
 import com.carbuyandsell.repository.CarInfoRepo;
-import com.carbuyandsell.repository.DiscountRepo;
 import com.carbuyandsell.repository.UserInfoRepo;
 import com.carbuyandsell.userdetails.UserDetails;
 
@@ -25,7 +25,7 @@ public class UserService {
 	public CarInfoRepo carrepo;
 
 	@Autowired
-	public DiscountService disser;
+	public DiscountService disservice;
 	
 	@Autowired
 	public ModelMapper modelMapper;
@@ -33,16 +33,16 @@ public class UserService {
 	@Autowired
 	public UserService userservice;
 
-	public UserDetails SaveUserDetails(int custNo, int carNo) {
+	public UserDetails BuyCarWithUserDetails(int user_id, int carNo) {
 		
 		
-		UserDetails userdetails1 = userrepo.findById(custNo)
-				.orElseThrow(() -> new AbortException("Couldn't get any User number"));
-		userdetails1.setUser_type(true);
+		UserDetails userdetails = userrepo.findById(user_id)
+				.orElseThrow(() -> new AbortException("Couldn't get any user_id"));
+		userdetails.setUser_type(true);
 
 
-		if (userdetails1.isUser_type() == true) {
-			userdetails1.setCount_purchased(userdetails1.getCount_purchased() + 1);
+		if (userdetails.isUser_type() == true) {
+			userdetails.setCount_purchased(userdetails.getCount_purchased() + 1);
 
 		}
 
@@ -57,29 +57,34 @@ public class UserService {
 		carinfo.setCar_price(carinfoget.getCar_price());
 		carinfo.setContact_no(carinfoget.getContact_no());
 		carinfo.setManufacture_year(carinfoget.getManufacture_year());
-		carinfo.setYear(carinfoget.getYear());
-
+		carinfo.setBuy_year(carinfoget.getBuy_year());
+		carinfo.setCreated_at(carinfoget.getCreated_at());
+		carinfo.setUpdated_at(carinfoget.getUpdated_at());
 		carinfo.setBuy_at(carinfoget.getBuy_at().now());
 		carinfo.setPurchased(true);
 
 		int discount;
-		switch (userdetails1.getCount_purchased()) {
+		int count = 0;
+		switch (userdetails.getCount_purchased()) {
 			case 1:
-				List<Discount> firstdis = disser.getDiscountRecrod();
-				discount = firstdis.get(0).getFirst_time_dis();
+				List<Discount> firstdis = disservice.getDiscountRecrod();
+				count = firstdis.size()-1;
+				discount = firstdis.get(count).getFirst_time_dis();
 
 				carinfo.setDiscount_price(carinfoget.getCar_price() - (carinfoget.getCar_price() * discount) / 100);
 
 				break;
 			case 2:
-				List<Discount> seconddis = disser.getDiscountRecrod();
-				discount = seconddis.get(0).getSecond_time_dis();
+				List<Discount> seconddis = disservice.getDiscountRecrod();
+				count = seconddis.size()-1;
+				discount = seconddis.get(count).getSecond_time_dis();
 
 				carinfo.setDiscount_price(carinfoget.getCar_price() - (carinfoget.getCar_price() * discount) / 100);
 				break;
 			case 3:
-				List<Discount> thirddis = disser.getDiscountRecrod();
-				discount = thirddis.get(0).getThird_time_dis();
+				List<Discount> thirddis = disservice.getDiscountRecrod();
+				count = thirddis.size()-1;
+				discount = thirddis.get(count).getThird_time_dis();
 
 				carinfo.setDiscount_price(carinfoget.getCar_price() - (carinfoget.getCar_price() * discount) / 100);
 
@@ -89,28 +94,52 @@ public class UserService {
 		}
 
 
-		List<CarInfo> carinfo1 = new ArrayList<>();
-		carinfo1.add(carinfo);
-		userdetails1.getCarinfo().addAll(carinfo1);
+		List<CarInfo> carinfolist = new ArrayList<>();
+		carinfolist.add(carinfo);
+		userdetails.getCarinfo().addAll(carinfolist);
 
-		return userrepo.save(userdetails1);
+		return userrepo.save(userdetails);
 	}
 
 	public UserDetails saveOnlyUser(UserDetails user) {
 		
-		
-		// Converting the DTO to entity
-		UserDetails userRequest = modelMapper.map(user, UserDetails.class);
 		user.setCreated_at(user.getCreated_at().now());
 		UserDetails userdetails = userrepo.save(user);
-
-		//UserDetails userdetails1 = userservice.saveOnlyUser(userRequest);
 		// Converting the entity to DTO
 		UserDetails buyerdtoResponce = modelMapper.map(userdetails, UserDetails.class);
+		
+		return buyerdtoResponce;
 
+	}
+	
+	public UserDetails buyer(int user_id, int carNo, UserDetails userdetail) {
+		CarInfo carInfo = carrepo.findById(carNo).orElseThrow(() -> new AbortException("Wrong car number is provided"));
 
-		return userdetails;
+		if (carInfo.isPurchased() != true) {
+			carInfo.setPurchased(false);
+		}
+		userdetail = userrepo.findById(user_id)
+				.orElseThrow(() -> new AbortException("Wrong User number is specified in HEADERS"));
 
+		if (userdetail.isUser_type() == false) {
+			carInfo.setPurchased(true);
+		}
 
+		return userrepo.save(userdetail);
+	}
+
+	public BuyerDTO updateUserDetails(int user_id, UserDetails userDetails) {
+		UserDetails update = userrepo.findById(user_id)
+				.orElseThrow(() -> new AbortException("Wrong user_id is specified"));
+		update.setUser_name(userDetails.getUser_name());
+		update.setUser_contact_no(userDetails.getUser_contact_no());
+		update.setUser_name(userDetails.getUser_name());
+		update.setUpdate_at(userDetails.getUpdate_at().now());
+		UserDetails userdetails = userrepo.save(update);
+
+		// Then convert entity to BuerDTO
+		BuyerDTO buyerResponse = modelMapper.map(userdetails, BuyerDTO.class);
+
+		return buyerResponse;
 	}
 }

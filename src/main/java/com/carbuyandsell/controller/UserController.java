@@ -1,17 +1,15 @@
 package com.carbuyandsell.controller;
 
 import com.carbuyandsell.buyerDTO.BuyerDTO;
-import com.carbuyandsell.discount.Discount;
 import com.carbuyandsell.service.UserService;
 import com.carbuyandsell.userdetails.UserDetails;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,9 +20,6 @@ public class UserController {
 	@Autowired
 	public UserService userservice;
 
-	@Autowired
-	public ModelMapper modelMapper;
-
 	@PostMapping("/saveuser")
 	public ResponseEntity<BuyerDTO> savedetailes(@RequestBody UserDetails user) {
 		userservice.saveOnlyUser(user);
@@ -32,9 +27,16 @@ public class UserController {
 	}
 
 	@PostMapping("/buy/{carno}")
-	public UserDetails buyCar(@RequestHeader("User_Contact_No") int user_contact_no, @PathVariable("carno") int carno) {
-		return userservice.SaveUserDetails(user_contact_no, carno);
+	public UserDetails buyCar(@RequestHeader("User_id") int user_id, @PathVariable("carno") int carno) {
+		return userservice.BuyCarWithUserDetails(user_id, carno);
 
+	}
+
+	@PutMapping("/updateuser/{user_id}")
+	public ResponseEntity<BuyerDTO> updateDetails(@PathVariable("user_id") int user_id,
+			@RequestBody UserDetails userDetails) {
+		userservice.updateUserDetails(user_id, userDetails);
+		return ResponseEntity.ok().body(null);
 	}
 
 }

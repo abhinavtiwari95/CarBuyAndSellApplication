@@ -30,15 +30,15 @@ public class Controller {
 
 	@PostMapping("/sellcardetails")
 	public ResponseEntity<BuyerDTO> sellcardetails(@RequestBody CarInfo car) {
-		carservice.Sellcar(car);
-		return new ResponseEntity<BuyerDTO>(HttpStatus.CREATED);
+		
+		return new ResponseEntity<BuyerDTO>(carservice.Sellcar(car),HttpStatus.CREATED);
+
 	}
 
 	@PutMapping("/update/{car_number}")
 	public ResponseEntity<BuyerDTO> updateDetails(@PathVariable("car_number") int car_number,
 			@RequestBody CarInfo carinfo) {
-		carservice.update(car_number, carinfo);
-		return ResponseEntity.ok().body(null);
+		return ResponseEntity.ok().body(carservice.update(car_number, carinfo));
 	}
 
 }

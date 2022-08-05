@@ -3,29 +3,32 @@ package com.carbuyandsell.discount;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Discount {
 	@Id
-	private int list_no;
-	
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
+
 	private LocalDateTime createdAt;
-	
+
 	private int first_time_dis;
 
 	private int second_time_dis;
 
 	private int third_time_dis;
-	
+
 	private LocalDateTime updatedAt;
 
-	public int getList_no() {
-		return list_no;
+	public int getId() {
+		return id;
 	}
 
-	public void setList_no(int list_no) {
-		this.list_no = list_no;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public LocalDateTime getCreatedAt() {
@@ -67,7 +70,5 @@ public class Discount {
 	public void setUpdatedAt(LocalDateTime updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-	
-	
-	
+
 }

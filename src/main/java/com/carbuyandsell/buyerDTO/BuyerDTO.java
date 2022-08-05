@@ -1,7 +1,5 @@
 package com.carbuyandsell.buyerDTO;
 
-import java.time.LocalDateTime;
-
 public class BuyerDTO {
 
 	private int car_number;
@@ -9,27 +7,9 @@ public class BuyerDTO {
 	private String car_company;
 	private int Manufacture_year;
 	private int car_price;
-	private int year;
+	private int buy_year;
 	private String car_owner;
 	private int contact_no;
-	private LocalDateTime created_at;
-	private LocalDateTime update_at;
-
-	public LocalDateTime getCreated_at() {
-		return created_at;
-	}
-
-	public void setCreated_at(LocalDateTime created_at) {
-		this.created_at = created_at;
-	}
-
-	public LocalDateTime getUpdate_at() {
-		return update_at;
-	}
-
-	public void setUpdate_at(LocalDateTime update_at) {
-		this.update_at = update_at;
-	}
 
 	public int getCar_number() {
 		return car_number;
@@ -71,12 +51,13 @@ public class BuyerDTO {
 		this.car_price = car_price;
 	}
 
-	public int getYear() {
-		return year;
+	
+	public int getBuy_year() {
+		return buy_year;
 	}
 
-	public void setYear(int year) {
-		this.year = year;
+	public void setBuy_year(int buy_year) {
+		this.buy_year = buy_year;
 	}
 
 	public String getCar_owner() {

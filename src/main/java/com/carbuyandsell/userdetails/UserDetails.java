@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
@@ -15,15 +17,27 @@ import com.carbuyandsell.carentity.CarInfo;
 public class UserDetails {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int user_id;
+	
 	private int user_contact_no;
 	private String user_name;
 	private String user_address;
 	private int count_purchased;
 	private LocalDateTime created_at;
+	private LocalDateTime update_at;
 	private boolean user_type = Boolean.FALSE;
 
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<CarInfo> carinfo = new ArrayList<CarInfo>();
+
+	public int getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
+	}
 
 	public int getUser_contact_no() {
 		return user_contact_no;
@@ -80,6 +94,14 @@ public class UserDetails {
 
 	public void setCreated_at(LocalDateTime created_at) {
 		this.created_at = created_at;
+	}
+
+	public LocalDateTime getUpdate_at() {
+		return update_at;
+	}
+
+	public void setUpdate_at(LocalDateTime update_at) {
+		this.update_at = update_at;
 	}
 
 }
