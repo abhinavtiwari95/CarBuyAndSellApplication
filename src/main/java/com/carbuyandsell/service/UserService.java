@@ -63,7 +63,9 @@ public class UserService {
 		carinfo.setUpdated_at(carinfoget.getUpdated_at());
 		carinfo.setBuy_at(carinfoget.getBuy_at().now());
 		carinfo.setPurchased(true);
-
+/**
+ * Gating discount value 
+ */
 		int discount;
 		int count = 0;
 		switch (userdetails.getCount_purchased()) {
@@ -113,7 +115,9 @@ public class UserService {
 		return buyerdtoResponce;
 
 	}
-	
+	/*
+	 * Buy the car
+	 */
 	public UserDetails buyer(int user_id, int carNo, UserDetails userdetail) {
 		CarInfo carInfo = carrepo.findById(carNo).orElseThrow(() -> new AbortException("Wrong car number is provided"));
 
@@ -129,7 +133,9 @@ public class UserService {
 
 		return userrepo.save(userdetail);
 	}
-
+/*
+ * updating user details
+ */
 	public BuyerDTO updateUserDetails(int user_id, UserDetails userDetails) {
 		UserDetails update = userrepo.findById(user_id)
 				.orElseThrow(() -> new AbortException("Wrong user_id is specified"));

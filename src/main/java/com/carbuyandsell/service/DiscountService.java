@@ -22,7 +22,7 @@ public class DiscountService {
 
 	@Autowired
 	public DiscountRepo discountrepo;
-
+//Adding discount value
 	public Discount addDiscount(Discount addDiscount) {
 		
 		addDiscount.setCreatedAt(addDiscount.getCreatedAt().now());
@@ -35,7 +35,7 @@ public class DiscountService {
 		return discount;
 
 	}
-
+// updating discount value
 	public Discount updateDiscount(int id, Discount updateDiscount) {
 		Discount getdiscount = discountrepo.findById(id)
 				.orElseThrow(() -> new AbortException("Wrong Discount ID is specified"));

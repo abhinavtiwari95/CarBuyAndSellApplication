@@ -18,12 +18,13 @@ public class DiscountController {
 	@Autowired
 	public DiscountService disService;
 
+// Added the BuyDTO class for PostMapping to addDiscount
 	@PostMapping("/adddiscount")
 	public ResponseEntity<BuyerDTO> discountAdded(@RequestBody Discount AddDiscount) {
 		disService.addDiscount(AddDiscount);
 		return new ResponseEntity<BuyerDTO>(HttpStatus.CREATED);
 	}
-
+// Added the BuyDTO class for PutMapping to update the Discount 
 	@PutMapping("/updatediscount/{id}")
 	public ResponseEntity<BuyerDTO> updateDiscount(@PathVariable("id") int id, @RequestBody Discount UpdateDiscount) {
 		disService.updateDiscount(id, UpdateDiscount);

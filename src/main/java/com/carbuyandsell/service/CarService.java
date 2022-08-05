@@ -48,7 +48,7 @@ public class CarService {
 		return buyerdto;
 
 	}
-
+//Sell car
 	public BuyerDTO Sellcar(CarInfo carinfor) {
 
 		carinfor.setCreated_at(carinfor.getCreated_at().now());
@@ -62,7 +62,7 @@ public class CarService {
 
 	}
 
-	
+	// updating CarInfo
 
 	public BuyerDTO update(int car_number, CarInfo car) {
 		CarInfo update = carrepo.findById(car_number)
